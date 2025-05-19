@@ -12,3 +12,9 @@ def cifar(device=None):
   train = Tensor.cat(*[tt[f"cifar-10-batches-bin/data_batch_{i}.bin"].reshape(-1, 3073).to(device) for i in range(1,6)])
   test = tt["cifar-10-batches-bin/test_batch.bin"].reshape(-1, 3073).to(device)
   return train[:, 1:].reshape(-1,3,32,32), train[:, 0], test[:, 1:].reshape(-1,3,32,32), test[:, 0]
+
+def svhn(device=None):
+  tt = tar_extract(Tensor.from_url('http://ufldl.stanford.edu/housenumbers/train.tar.gz', gunzip=True))
+  train = Tensor.cat(*[tt[f"train/{i}"].reshape(-1, 3073).to(device) for i in range(1,6)])
+  test = tt["test/test.tar.gz"].reshape(-1, 3073).to(device)
+  return train[:, 1:].reshape(-1,3,32,32), train[:, 0], test[:, 1:].reshape(-1,3,32,32), test[:, 0]
